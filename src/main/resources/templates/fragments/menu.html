@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <title>Menu</title>
+</head>
+<body>
+    <div id="nav-menu" class="w3-container w3-center">
+        <button onclick="location.href = '/'">Home</button>
+        <button onclick="location.href = '/products'">Products</button>
+        <button sec:authorize="hasAnyAuthority('ADMIN','MANAGER')" onclick="location.href = '/users'">Users</button>
+        <button sec:authorize="isAuthenticated()" onclick="location.href = '/bucket'">Bucket</button>
+
+        <div class="w3-container w3-right" sec:authorize="isAuthenticated()">
+            <div>
+                Hello,<a th:href="@{/users/profile}" ><span sec:authentication="principal.username">User</span></a>
+            </div>
+            <div >
+                <button onclick="location.href = '/logout'">Logout</button>
+            </div>
+        </div>
+
+        <div sec:authorize="!isAuthenticated()">
+            <div>
+                Hello. Please <button onclick="location.href = '/login'">Login</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

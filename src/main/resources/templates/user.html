@@ -2,31 +2,35 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <title>Add user</title>
 </head>
 <body>
-<form th:action="@{/user/new}" th:object="${user}" method="post">
-    <table border="1">
-        <tr>
-            <td>Name</td>
-            <td><input type="text" th:field="*{username}"></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" th:field="*{password}"></td>
-        </tr>
-        <tr>
-            <td>Matching Password</td>
-            <td><input type="password" th:field="*{matchingPassword}"></td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td><input type="email" th:field="*{email}"></td>
-        </tr>
-    </table>
 
-    <button type="submit">Save</button>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
+<form th:action="@{/users/new}" th:object="${user}" method="post">
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in this form to create an account.</p>
+        <hr>
+
+        <label for="name"><b>Name</b></label>
+        <input type="text" placeholder="Enter Name" th:field="*{username}" id="name" required>
+
+
+        <label for="password"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" th:field="*{password}" id="password" required>
+
+        <label for="matchingPassword"><b>Repeat Password</b></label>
+        <input type="password" placeholder="Repeat Password" th:field="*{matchingPassword}" id="matchingPassword" required>
+
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" th:field="*{email}" id="email" required>
+        <hr>
+
+        <button type="submit" >Register</button>
+    </div>
 </form>
 </body>
 </html>

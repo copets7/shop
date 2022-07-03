@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -45,6 +46,44 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void save(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public List<UserDTO> getAll() {
+     return userRepository.findAll().stream()
+             .map(this::toDto)
+             .collect(Collectors.toList());
+    }
+
+    @Override
+    public User findByName(String name) {
+        return userRepository.findFirstByName(name);
+    }
+
+    @Override
+    public void updateProfile(UserDTO userDTO) {
+    User user = userRepository.findFirstByName(userDTO.getUsername());
+    if (user == null){
+        throw new RuntimeException("User not found by name : " + userDTO.getUsername());
+    }
+    boolean isChanged = false;
+    if(userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()){
+        user.setPassword((passwordEncoder.encode(userDTO.getPassword())));
+        isChanged = true;
+    }
+
+    if (!Objects.equals(userDTO.getEmail(), user.getEmail())){
+        user.setEmail((userDTO.getEmail()));
+        isChanged = true;
+    }
+    if(isChanged){
+        userRepository.save(user);
+    }
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        User user = userRepository.findFirstByName(username);
        if( user == null){
@@ -55,5 +94,12 @@ public class UserServiceImpl implements UserService{
         roles.add(new SimpleGrantedAuthority(user.getRole().name()));
 
        return new  org.springframework.security.core.userdetails.User(user.getName(),user.getPassword(),roles);
+    }
+
+    private UserDTO toDto(User user){
+        return UserDTO.builder()
+                .username(user.getName())
+                .email(user.getEmail())
+                .build();
     }
 }

@@ -2,23 +2,22 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
     <title>Login page</title>
 </head>
 <body>
-<form th:action="@{/auth}" method="post">
-    <table border="1">
-        <tr>
-            <td>Name</td>
-            <td><input type="text" name="username"></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password"></td>
-        </tr>
-    </table>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-    <button type="submit">Log in</button>
+<div class="w3-container w3-center" >
+    <div class="login-container">
+        <p th:if="${loginError}" class="error"> Wrong name or password</p>
+        <form th:action="@{/auth}" method="post">
+            <input type="text" placeholder="Username" name="username">
+            <input type="password" placeholder="Password" name="password">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
 
-</form>
 </body>
 </html>

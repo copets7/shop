@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <title>Products</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<div>
+    <div >
+        <h2>Products</h2>
+        <table >
+            <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th></th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td></td>
+                <td th:text="${product.title}">Book</td>
+                <td></td>
+                <td th:text="${product.price}">99.9</td>
+                <td></td>
+                <td></td>
+                <td><a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a> </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<button onclick="location.href = '/'">Back</button>
+
+</body>
+</html>

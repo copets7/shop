@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <title>Shop</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h2>Your bucket</h2>
+<h3>All sum  : <b th:text="${bucket.sum}">10</b> </h3>
+<div>
+    <div >
+        <table >
+            <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th></th>
+                <th>Amount</th>
+                <th></th>
+                <th>Price</th>
+                <th></th>
+                <th>Sum</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="detail : ${bucket.bucketDetails}">
+                <td></td>
+                <td th:text="${detail.title}">Book</td>
+                <td></td>
+                <td th:text="${detail.amount}">2</td>
+                <td></td>
+                <td th:text="${detail.price}">3.0</td>
+                <td></td>
+                <td th:text="${detail.sum}">27</td>
+                <td></td>
+                <td><a href="#">Remove</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
